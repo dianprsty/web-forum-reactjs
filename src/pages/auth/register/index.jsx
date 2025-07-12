@@ -1,5 +1,12 @@
-import React from "react";
-
+import AuthLayout from "@/layouts/AuthLayout";
+import RegisterForm from "@/components/RegisterForm";
+import registerHero from "/images/register-hero.jpg";
 export default function Register() {
-  return <div>Register</div>;
+  return (
+    <>
+      <AuthLayout imageSrc={registerHero} imageAlt="Register Hero">
+        <RegisterForm />
+      </AuthLayout>
+    </>
+  );
 }

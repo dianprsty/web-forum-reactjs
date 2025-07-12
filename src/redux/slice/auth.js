@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginAction } from "../actions/auth";
+import { loginAction, registerAction } from "../actions/auth";
 import { load, save } from "@/utlis/localStorage";
 import { fetchStatus, localStorageKeys } from "@/constants/constants";
 
@@ -29,6 +29,21 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
     });
     builder.addCase(loginAction.rejected, (state, action) => {
+      state.status = fetchStatus.error;
+      state.loading = false;
+      state.error = action.error.message;
+    });
+    builder.addCase(registerAction.pending, (state) => {
+      state.status = fetchStatus.pending;
+      state.loading = true;
+    });
+    builder.addCase(registerAction.fulfilled, (state, action) => {
+      state.status = fetchStatus.success;
+      state.loading = false;
+      state.token = action.payload.token;
+      window.location.href = "/auth/login";
+    });
+    builder.addCase(registerAction.rejected, (state, action) => {
       state.status = fetchStatus.error;
       state.loading = false;
       state.error = action.error.message;

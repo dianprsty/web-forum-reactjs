@@ -31,3 +31,32 @@ export const loginAction = createAsyncThunk(
     }
   }
 );
+
+export const registerAction = createAsyncThunk(
+  "auth/register",
+  async (payload, _thunkApi) => {
+    try {
+      toast.loading("Loading...");
+      const response = await fetch(`${VITE_API_BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const json = await response.json();
+
+      if (response.status !== 201) {
+        throw new Error(json.message);
+      }
+      toast.dismiss();
+      toast.success("Register Success");
+      console.log(json);
+      return json.data;
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error.message);
+      return _thunkApi.rejectWithValue(error);
+    }
+  }
+);
