@@ -1,17 +1,17 @@
-import js from "@eslint/js";
-import globals from "globals";
-import pluginReact from "eslint-plugin-react";
-import { defineConfig } from "eslint/config";
-import daStyle from "eslint-config-dicodingacademy";
+import js from '@eslint/js';
+import globals from 'globals';
+import pluginReact from 'eslint-plugin-react';
+import { defineConfig } from 'eslint/config';
+import daStyle from 'eslint-config-dicodingacademy';
 
 export default defineConfig([
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
+    files: ['**/*.{js,mjs,cjs,jsx}'],
     plugins: { js, pluginReact },
-    extends: ["js/recommended"],
+    extends: ['js/recommended'],
   },
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
+    files: ['**/*.{js,mjs,cjs,jsx}'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
   pluginReact.configs.flat.recommended,
@@ -19,11 +19,15 @@ export default defineConfig([
   daStyle,
   {
     rules: {
-      "react/react-in-jsx-scope": "off",
+      'react/react-in-jsx-scope': 'off',
+      'no-unused-vars': 'off',
+      'linebreak-style': 'off',
+      quotes: 'off',
+      'no-trailing-spaces': 'off',
     },
     settings: {
       react: {
-        version: "detect",
+        version: 'detect',
       },
     },
   },
