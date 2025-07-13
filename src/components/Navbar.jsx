@@ -10,7 +10,7 @@ import NavButton from "./NavButton";
 
 export default function Navbar() {
   return (
-    <div className="absolute lg:h-dvh w-full lg:w-fit lg:top-0 left-0 bottom-0 flex lg:flex-col items-center  justify-center gap-10 p-4 z-50 shadow-lg lg:shadow-none">
+    <div className="absolute lg:h-full w-full lg:w-fit lg:top-0 left-0 bottom-0 flex lg:flex-col items-center  justify-center gap-10 p-4 z-50 shadow-lg lg:shadow-none">
       <NavButton Icon={HouseIcon}  path="/" />
       <NavButton Icon={SearchIcon} path="/explore" />
       <NavButton
