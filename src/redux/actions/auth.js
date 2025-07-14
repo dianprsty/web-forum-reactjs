@@ -1,6 +1,8 @@
 import { VITE_API_BASE_URL } from "@/utlis/env";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
+import { localStorageKeys } from "@/constants/constants";
+import { save } from "@/utlis/localStorage";
 
 export const loginAction = createAsyncThunk(
   "auth/login",
@@ -60,3 +62,12 @@ export const registerAction = createAsyncThunk(
     }
   }
 );
+
+export const logoutAction = createAction("auth/logout", () => {
+  save(localStorageKeys.token, null);
+  toast.success("Logout berhasil");
+  
+  return {
+    payload: null,
+  };
+});

@@ -1,15 +1,9 @@
 import { useEffect } from "react";
-import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllThreads } from "@/redux/actions/threads";
-import {
-  Heart,
-  MessageCircle,
-  Reply,
-  ThumbsDown,
-  ThumbsUp,
-} from "lucide-react";
+import { getAllThreads, getThreadById } from "@/redux/actions/threads";
+import { getAllUsers } from "@/redux/actions/user";
 import AppLayout from "@/layouts/AppLayout";
+import ThreadCard from "@/components/ThreadCard";
 
 export default function ThreadsHome() {
   const threads = useSelector((state) => state.threads.threads);
@@ -17,7 +11,16 @@ export default function ThreadsHome() {
 
   useEffect(() => {
     dispatch(getAllThreads());
-  }, []);
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (threads.length > 0) {
+      threads.slice(0, 5).forEach((thread) => {
+        dispatch(getThreadById(thread.id));
+      });
+    }
+  }, [threads.length, dispatch]);
   return (
     <AppLayout>
       <div className="flex flex-col max-w-xl mx-auto sm:border sm:border-gray-300 lg:shadow rounded-2xl">
@@ -25,24 +28,7 @@ export default function ThreadsHome() {
           <h1 className="text-xl font-bold p-4">Ask Anything</h1>
         </div>
         {threads.map((thread) => (
-          <div
-            key={thread.id}
-            className="p-4 flex flex-col border-t border-gray-300"
-          >
-            <h2 className="font-bold mb-2">{thread.title}</h2>
-            <p className="line-clamp-6 text-ellipsis">{parse(thread.body)}</p>
-            <div className="flex gap-8 text-gray-800 pt-4">
-              <button className="flex gap-1 items-center">
-                <ThumbsUp size={20} /> {thread.upVotesBy?.length}
-              </button>
-              <button className="flex gap-1 items-center">
-                <ThumbsDown size={20} /> {thread.downVotesBy?.length}
-              </button>
-              <button className="flex gap-1 items-center">
-                <MessageCircle size={20} /> {thread.totalComments}
-              </button>
-            </div>
-          </div>
+          <ThreadCard key={thread.id} thread={thread} />
         ))}
       </div>
     </AppLayout>

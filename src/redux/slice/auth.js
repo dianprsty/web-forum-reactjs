@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginAction, registerAction } from "../actions/auth";
+import { loginAction, logoutAction, registerAction } from "../actions/auth";
 import { load, save } from "@/utlis/localStorage";
 import { fetchStatus, localStorageKeys } from "@/constants/constants";
 
@@ -47,6 +47,13 @@ export const authSlice = createSlice({
       state.status = fetchStatus.error;
       state.loading = false;
       state.error = action.error.message;
+    });
+    builder.addCase(logoutAction, (state) => {
+      state.status = fetchStatus.idle;
+      state.loading = false;
+      state.error = null;
+      state.token = null;
+      state.isAuthenticated = false;
     });
   },
 });
