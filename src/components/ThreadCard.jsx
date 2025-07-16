@@ -148,8 +148,10 @@ export default function ThreadCard({ thread }) {
           {thread.downVotesBy?.length || 0}
         </button>
         <div className="flex gap-1 items-center">
-          <ChatBubbleOvalLeftIcon className="w-5 h-5" />{" "}
-          {thread.totalComments || 0}
+          <Link to={`/thread/${thread.id}`}>
+            <ChatBubbleOvalLeftIcon className="w-5 h-5" />{" "}
+          </Link>
+          {thread?.totalComments || thread.comments?.length || 0}
         </div>
       </div>
     </div>
@@ -165,6 +167,7 @@ ThreadCard.propTypes = {
     upVotesBy: PropTypes.arrayOf(PropTypes.string),
     downVotesBy: PropTypes.arrayOf(PropTypes.string),
     totalComments: PropTypes.number,
+    comments: PropTypes.arrayOf(PropTypes.object),
     createdAt: PropTypes.string.isRequired,
     ownerId: PropTypes.string,
     owner: PropTypes.shape({
