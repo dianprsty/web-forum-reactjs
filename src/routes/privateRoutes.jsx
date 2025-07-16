@@ -1,5 +1,5 @@
 import LeaderboardPage from "@/pages/leaderboard";
-import ThreadsHome from "../pages/home";
+import ThreadsHome from "@/pages/thread/home";
 import ProfilePage from "@/pages/profile";
 import ExplorePage from "@/pages/explore";
 import CreatePostPage from "@/pages/post/create";

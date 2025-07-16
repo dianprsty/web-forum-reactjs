@@ -4,10 +4,20 @@ import { load } from "@/utlis/localStorage";
 import { localStorageKeys } from "@/constants/constants";
 import toast from "react-hot-toast";
 
-const getAllThreads = createAsyncThunk("threads/getAllThreads", async () => {
-  const response = await fetch(`${VITE_API_BASE_URL}/threads`);
-  const data = await response.json();
-  return data.data;
+const getAllThreads = createAsyncThunk("threads/getAllThreads", async (_, _thunkApi) => {
+  try {
+    const response = await fetch(`${VITE_API_BASE_URL}/threads`);
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to fetch threads");
+    }
+    
+    return data.data;
+  } catch (error) {
+    toast.error(error.message || "Failed to fetch threads");
+    return _thunkApi.rejectWithValue(error.message || "Failed to fetch threads");
+  }
 });
 
 const createThread = createAsyncThunk(
@@ -39,7 +49,7 @@ const createThread = createAsyncThunk(
     } catch (error) {
       toast.dismiss();
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to create thread");
     }
   }
 );
@@ -62,7 +72,7 @@ const getThreadById = createAsyncThunk(
       };
     } catch (error) {
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to get thread");
     }
   }
 );

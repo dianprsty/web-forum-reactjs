@@ -4,6 +4,7 @@ import { load } from "@/utlis/localStorage";
 import { localStorageKeys } from "@/constants/constants";
 import toast from "react-hot-toast";
 import { getThreadById } from "./threads";
+import { getUserThreads } from "./user";
 
 export const upvoteThread = createAsyncThunk(
   "votes/upvoteThread",
@@ -24,6 +25,12 @@ export const upvoteThread = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {
@@ -52,6 +59,12 @@ export const downvoteThread = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {
@@ -80,6 +93,12 @@ export const neutralizeThreadVote = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {
@@ -111,6 +130,12 @@ export const upvoteComment = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {
@@ -142,6 +167,12 @@ export const downvoteComment = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {
@@ -173,6 +204,12 @@ export const neutralizeCommentVote = createAsyncThunk(
       }
 
       thunkAPI.dispatch(getThreadById({ threadId, fromVotes: true }));
+      
+      // Refresh user threads if on profile page
+      const state = thunkAPI.getState();
+      if (state.user.profile) {
+        thunkAPI.dispatch(getUserThreads(state.user.profile.id));
+      }
 
       return data.data.vote;
     } catch (error) {

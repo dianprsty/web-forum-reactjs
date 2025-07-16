@@ -7,6 +7,7 @@ import ThreadCard from "@/components/ThreadCard";
 
 export default function ThreadsHome() {
   const threads = useSelector((state) => state.threads.threads);
+  const isLoading = useSelector((state) => state.threads.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,9 +29,19 @@ export default function ThreadsHome() {
         <div>
           <h1 className="text-xl font-bold p-4">Ask Anything</h1>
         </div>
-        {threads.map((thread) => (
-          <ThreadCard key={thread.id} thread={thread} />
-        ))}
+        {isLoading ? (
+          <div className="p-4 text-center text-gray-500">
+            Loading threads...
+          </div>
+        ) : threads.length === 0 ? (
+          <div className="p-4 text-center text-gray-500">
+            No threads found. Be the first to create one!
+          </div>
+        ) : (
+          threads.map((thread) => (
+            <ThreadCard key={thread.id} thread={thread} />
+          ))
+        )}
       </div>
     </AppLayout>
   );

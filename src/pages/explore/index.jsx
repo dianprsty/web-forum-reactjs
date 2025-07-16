@@ -62,7 +62,7 @@ export default function ExplorePage() {
         <div className="px-4 pb-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MagnifyingGlassIcon size={18} className="text-gray-400" />
+              <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
             </div>
             <input
               type="text"

@@ -29,7 +29,7 @@ export const loginAction = createAsyncThunk(
     } catch (error) {
       toast.dismiss();
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to login");
     }
   }
 );
@@ -58,7 +58,7 @@ export const registerAction = createAsyncThunk(
     } catch (error) {
       toast.dismiss();
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to register");
     }
   }
 );

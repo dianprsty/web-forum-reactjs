@@ -23,11 +23,11 @@ export const getUserProfile = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error(json.message);
       }
-
+      
       return json.data;
     } catch (error) {
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to get user profile");
     }
   }
 );
@@ -46,11 +46,11 @@ export const getUserThreads = createAsyncThunk(
       const userThreads = json.data.threads.filter(
         (thread) => thread.ownerId === userId
       );
-
+      
       return userThreads;
     } catch (error) {
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to get user threads");
     }
   }
 );
@@ -69,7 +69,7 @@ export const getAllUsers = createAsyncThunk(
       return json.data;
     } catch (error) {
       toast.error(error.message);
-      return _thunkApi.rejectWithValue(error);
+      return _thunkApi.rejectWithValue(error.message || "Failed to get all users");
     }
   }
 );
