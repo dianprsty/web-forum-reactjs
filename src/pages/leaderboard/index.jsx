@@ -28,7 +28,7 @@ export default function LeaderboardPage() {
             <p className="font-bold text-lg">Skor</p>
           </div>
         </div>
-        {isLoading ? (
+        {isLoading && leaderboard.length === 0 ? (
           <div className="p-8 text-center">
             <p className="text-gray-500">Loading leaderboard data...</p>
           </div>

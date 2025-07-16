@@ -29,7 +29,7 @@ export default function ThreadsHome() {
         <div>
           <h1 className="text-xl font-bold p-4">Ask Anything</h1>
         </div>
-        {isLoading ? (
+        {isLoading && threads.length === 0 ? (
           <div className="p-4 text-center text-gray-500">
             Loading threads...
           </div>
