@@ -47,14 +47,19 @@ const createThread = createAsyncThunk(
 const getThreadById = createAsyncThunk(
   "threads/getThreadById",
   async (threadId, _thunkApi) => {
+    const isFromVotes = typeof threadId === 'object' && threadId.fromVotes;
+    const actualThreadId = typeof threadId === 'object' ? threadId.threadId : threadId;
     try {
-      const response = await fetch(`${VITE_API_BASE_URL}/threads/${threadId}`);
+      const response = await fetch(`${VITE_API_BASE_URL}/threads/${actualThreadId}`);
       const json = await response.json();
 
       if (response.status !== 200) {
         throw new Error(json.message);
       }
-      return json.data;
+      return {
+        ...json.data,
+        fromVotes: isFromVotes
+      };
     } catch (error) {
       toast.error(error.message);
       return _thunkApi.rejectWithValue(error);

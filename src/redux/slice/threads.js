@@ -50,8 +50,12 @@ const threadsSlice = createSlice({
           action.payload?.message || action.error.message;
         state.createThreadStatus.success = false;
       })
-      .addCase(getThreadById.pending, (state) => {
-        state.threadDetailStatus.isLoading = true;
+      .addCase(getThreadById.pending, (state, action) => {
+        const isFromVotes = action.meta.arg.fromVotes;
+        
+        if (!isFromVotes) {
+          state.threadDetailStatus.isLoading = true;
+        }
         state.threadDetailStatus.error = null;
       })
       .addCase(getThreadById.fulfilled, (state, action) => {

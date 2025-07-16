@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "./Button";
 import { useDispatch } from "react-redux";
 import { registerAction } from "@/redux/actions/auth";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllThreads, getThreadById } from "@/redux/actions/threads";
 import { getAllUsers } from "@/redux/actions/user";
 import ThreadCard from "@/components/ThreadCard";
-import { Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function ExplorePage() {
   const threads = useSelector((state) => state.threads.threads);
@@ -62,7 +62,7 @@ export default function ExplorePage() {
         <div className="px-4 pb-4">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search size={18} className="text-gray-400" />
+              <MagnifyingGlassIcon size={18} className="text-gray-400" />
             </div>
             <input
               type="text"

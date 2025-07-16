@@ -1,14 +1,52 @@
 import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
-import { ThumbsUp, ThumbsDown, MessageCircle } from "lucide-react";
 import { format } from "timeago.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { upvoteThread, downvoteThread, neutralizeThreadVote } from "@/redux/actions/votes";
+import { setThreadVoteOptimistic } from "@/redux/slice/votes";
+import { ChatBubbleOvalLeftIcon, HandThumbDownIcon, HandThumbUpIcon } from "@heroicons/react/24/outline";
+import { HandThumbDownIcon as HandThumbDownIconSolid, HandThumbUpIcon as HandThumbUpIconSolid } from "@heroicons/react/24/solid";
+import cn from "@/utlis/classname";
+import toast from "react-hot-toast";
 
 export default function ThreadCard({ thread }) {
+  const dispatch = useDispatch();
   const usersMap = useSelector((state) => state.user.usersMap);
-
+  const { profile } = useSelector((state) => state.user);
   const owner = thread.owner || (thread.ownerId && usersMap[thread.ownerId]);
+
+  const handleUpvote = () => {
+    if (!profile) {
+      toast.error("Please login to vote");
+      return;
+    }
+
+    const isUpvoted = thread.upVotesBy?.includes(profile.id);
+    if (isUpvoted) {
+      dispatch(setThreadVoteOptimistic({ threadId: thread.id, voteType: 0, userId: profile.id }));
+      dispatch(neutralizeThreadVote(thread.id));
+    } else {
+      dispatch(setThreadVoteOptimistic({ threadId: thread.id, voteType: 1, userId: profile.id }));
+      dispatch(upvoteThread(thread.id));
+    }
+  };
+
+  const handleDownvote = () => {
+    if (!profile) {
+      toast.error("Please login to vote");
+      return;
+    }
+    const isDownvoted = thread.downVotesBy?.includes(profile.id);
+    if (isDownvoted) {
+      dispatch(setThreadVoteOptimistic({ threadId: thread.id, voteType: 0, userId: profile.id }));
+      dispatch(neutralizeThreadVote(thread.id));
+    } else {
+      dispatch(setThreadVoteOptimistic({ threadId: thread.id, voteType: -1, userId: profile.id }));
+      dispatch(downvoteThread(thread.id));
+    }
+  };
 
   return (
     <div className="p-4 flex flex-col border-t border-gray-300">
@@ -17,7 +55,9 @@ export default function ThreadCard({ thread }) {
           #{thread.category}
         </span>
       )}
-      <h2 className="font-bold mb-1">{thread.title}</h2>
+      <Link to={`/thread/${thread.id}`}>
+        <h2 className="font-bold mb-1 hover:text-blue-600 transition-colors">{thread.title}</h2>
+      </Link>
       <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
         {owner ? (
           <>
@@ -39,15 +79,30 @@ export default function ThreadCard({ thread }) {
 
       <p className="line-clamp-6 text-ellipsis">{parse(thread.body)}</p>
       <div className="flex gap-8 text-gray-800 pt-4">
-        <button className="flex gap-1 items-center">
-          <ThumbsUp size={20} /> {thread.upVotesBy?.length}
+        <button
+          className={`flex gap-1 items-center ${thread.upVotesBy?.includes(profile?.id) ? 'text-zinc-900 font-bold' : ''}`}
+          onClick={handleUpvote}
+        >
+          {thread.upVotesBy?.includes(profile?.id) ? (
+            <HandThumbUpIconSolid className="w-5 h-5 text-zinc-900" />
+          ) : (
+            <HandThumbUpIcon className="w-5 h-5" />
+          )} {thread.upVotesBy?.length || 0}
         </button>
-        <button className="flex gap-1 items-center">
-          <ThumbsDown size={20} /> {thread.downVotesBy?.length}
+        <button
+          className={`flex gap-1 items-center ${thread.downVotesBy?.includes(profile?.id) ? 'text-zinc-900 font-bold' : ''}`}
+          onClick={handleDownvote}
+        >
+          {thread.downVotesBy?.includes(profile?.id) ? (
+            <HandThumbDownIconSolid className="w-5 h-5 text-zinc-900" />
+          ) : (
+            <HandThumbDownIcon className="w-5 h-5" />
+          )} {thread.downVotesBy?.length || 0}
         </button>
-        <button className="flex gap-1 items-center">
-          <MessageCircle size={20} /> {thread.totalComments}
-        </button>
+        <div className="flex gap-1 items-center">
+          <ChatBubbleOvalLeftIcon className="w-5 h-5" /> {thread.totalComments || 0}
+
+        </div>
       </div>
     </div>
   );

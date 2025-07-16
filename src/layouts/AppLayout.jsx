@@ -4,9 +4,9 @@ import React from "react";
 
 export default function AppLayout({ children }) {
   return (
-    <div className="relative min-h-dvh">
+    <div className="min-h-dvh">
       <Navbar />
-      <main className="p-4 lg:p-8">{children}</main>
+      <main className="p-4 lg:p-8 mb-12 lg:mb-0">{children}</main>
     </div>
   );
 }

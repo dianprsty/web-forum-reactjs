@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllThreads, getThreadById } from "@/redux/actions/threads";
-import { getAllUsers } from "@/redux/actions/user";
+import { getAllUsers, getUserProfile } from "@/redux/actions/user";
 import AppLayout from "@/layouts/AppLayout";
 import ThreadCard from "@/components/ThreadCard";
 
@@ -12,6 +12,7 @@ export default function ThreadsHome() {
   useEffect(() => {
     dispatch(getAllThreads());
     dispatch(getAllUsers());
+    dispatch(getUserProfile());
   }, [dispatch]);
 
   useEffect(() => {

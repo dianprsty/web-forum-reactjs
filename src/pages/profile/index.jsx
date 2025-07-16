@@ -2,11 +2,11 @@ import AppLayout from "@/layouts/AppLayout";
 import { getUserProfile, getUserThreads } from "@/redux/actions/user";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LogOut } from "lucide-react";
 import LogoutConfirmModal from "@/components/LogoutConfirmModal";
 import { logoutAction } from "@/redux/actions/auth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import ThreadCard from "@/components/ThreadCard";
+import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 
 export default function ProfilePage() {
   const { profile, threads, isLoading } = useSelector((state) => state.user);
@@ -46,7 +46,7 @@ export default function ProfilePage() {
                 onClick={() => setShowLogoutModal(true)}
                 className="flex items-center gap-2 px-4 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors"
               >
-                <LogOut size={18} />
+                <ArrowRightStartOnRectangleIcon size={18} />
                 Logout
               </button>
             </div>

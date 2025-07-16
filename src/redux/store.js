@@ -4,6 +4,8 @@ import authReducer from "@/redux/slice/auth";
 import threadsReducer from "@/redux/slice/threads";
 import leaderboardReducer from "@/redux/slice/leaderboard";
 import userReducer from "@/redux/slice/user";
+import commentsReducer from "@/redux/slice/comments";
+import votesReducer from "@/redux/slice/votes";
 
 export default configureStore({
   reducer: {
@@ -12,5 +14,7 @@ export default configureStore({
     threads: threadsReducer,
     leaderboard: leaderboardReducer,
     user: userReducer,
+    comments: commentsReducer,
+    votes: votesReducer,
   },
 });

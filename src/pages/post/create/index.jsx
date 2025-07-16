@@ -2,7 +2,7 @@ import AppLayout from "@/layouts/AppLayout";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createThread } from "@/redux/actions/threads";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 export default function CreatePostPage() {

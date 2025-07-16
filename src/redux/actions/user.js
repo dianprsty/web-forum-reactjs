@@ -4,7 +4,6 @@ import { load } from "@/utlis/localStorage";
 import { localStorageKeys } from "@/constants/constants";
 import toast from "react-hot-toast";
 
-// User profile actions
 export const getUserProfile = createAsyncThunk(
   "user/getUserProfile",
   async (_, _thunkApi) => {
@@ -33,7 +32,6 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
-// User threads actions
 export const getUserThreads = createAsyncThunk(
   "user/getUserThreads",
   async (userId, _thunkApi) => {
@@ -57,7 +55,6 @@ export const getUserThreads = createAsyncThunk(
   }
 );
 
-// All users actions
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
   async (_, _thunkApi) => {

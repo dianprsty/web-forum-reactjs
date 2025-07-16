@@ -3,6 +3,7 @@ import ThreadsHome from "../pages/home";
 import ProfilePage from "@/pages/profile";
 import ExplorePage from "@/pages/explore";
 import CreatePostPage from "@/pages/post/create";
+import ThreadDetailPage from "@/pages/thread/detail";
 import PrivateRouteWrapper from "./PrivateRouteWrapper";
 
 const privateRoutes = [
@@ -16,6 +17,7 @@ const privateRoutes = [
       { path: "/profile", element: <ProfilePage /> },
       { path: "/explore", element: <ExplorePage /> },
       { path: "/post/create", element: <CreatePostPage /> },
+      { path: "/thread/:threadId", element: <ThreadDetailPage /> },
     ],
   },
 ];
