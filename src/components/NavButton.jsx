@@ -3,14 +3,18 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export default function NavButton({ Icon, path, className, IconSolid }) {
+export default function NavButton({ id, Icon, path, className, IconSolid }) {
   const { pathname } = useLocation();
   const isActive = pathname === path;
 
   return (
     <Link
+      id={id}
       to={path}
-      className={cn("py-2 px-3 rounded-lg cursor-pointer hover:bg-gray-200", className)}
+      className={cn(
+        "py-2 px-3 rounded-lg cursor-pointer hover:bg-gray-200",
+        className
+      )}
     >
       {isActive && IconSolid ? (
         <IconSolid
@@ -32,6 +36,7 @@ export default function NavButton({ Icon, path, className, IconSolid }) {
 }
 
 NavButton.propTypes = {
+  id: PropTypes.string.isRequired,
   Icon: PropTypes.elementType.isRequired,
   IconSolid: PropTypes.elementType,
   path: PropTypes.string,

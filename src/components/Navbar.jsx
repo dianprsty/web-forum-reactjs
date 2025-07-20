@@ -5,17 +5,18 @@ import NavButton from "./NavButton";
 
 export default function Navbar() {
   return (
-    <div className="fixed bg-white lg:h-dvh w-full lg:w-fit lg:top-0 left-0 bottom-0 flex lg:flex-col items-center  justify-center gap-10 p-4 z-50 shadow-lg lg:shadow-none">
-      <NavButton Icon={HomeIcon} IconSolid={HomeIconSolid} path="/" />
-      <NavButton Icon={MagnifyingGlassIcon} IconSolid={MagnifyingGlassIconSolid} path="/explore" />
+    <nav className="fixed bg-white lg:h-dvh w-full lg:w-fit lg:top-0 left-0 bottom-0 flex lg:flex-col items-center  justify-center gap-10 p-4 z-50 shadow-lg lg:shadow-none">
+      <NavButton id="home" Icon={HomeIcon} IconSolid={HomeIconSolid} path="/" />
+      <NavButton id="explore" Icon={MagnifyingGlassIcon} IconSolid={MagnifyingGlassIconSolid} path="/explore" />
       <NavButton
+        id="create"
         Icon={PlusIcon}
         IconSolid={PlusIconSolid}
         path="/post/create"
         className="bg-gray-100"
       />
-      <NavButton Icon={ChartBarIcon} IconSolid={ChartBarIconSolid} path="/leaderboard" />
-      <NavButton Icon={UserIcon} IconSolid={UserIconSolid} path="/profile" />
-    </div>
+      <NavButton id="leaderboard" Icon={ChartBarIcon} IconSolid={ChartBarIconSolid} path="/leaderboard" />
+      <NavButton id="profile" Icon={UserIcon} IconSolid={UserIconSolid} path="/profile" />
+    </nav>
   );
 }
