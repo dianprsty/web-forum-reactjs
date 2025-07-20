@@ -30,7 +30,7 @@ export const userSlice = createSlice({
       .addCase(getUserProfile.rejected, (state, action) => {
         state.fetchStatus = fetchStatus.error;
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload?.message || action.error?.message;
       });
     builder
       .addCase(getUserThreads.pending, (state) => {
@@ -45,7 +45,7 @@ export const userSlice = createSlice({
       .addCase(getUserThreads.rejected, (state, action) => {
         state.fetchStatus = fetchStatus.error;
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload?.message || action.error?.message;
       });
     builder
       .addCase(getAllUsers.pending, (state) => {
@@ -66,7 +66,7 @@ export const userSlice = createSlice({
       .addCase(getAllUsers.rejected, (state, action) => {
         state.fetchStatus = fetchStatus.error;
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload?.message || action.error?.message;
       });
   },
 });

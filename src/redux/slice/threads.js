@@ -32,7 +32,7 @@ const threadsSlice = createSlice({
       })
       .addCase(getAllThreads.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.error?.message;
       })
       .addCase(createThread.pending, (state) => {
         state.createThreadStatus.isLoading = true;
@@ -47,11 +47,11 @@ const threadsSlice = createSlice({
       .addCase(createThread.rejected, (state, action) => {
         state.createThreadStatus.isLoading = false;
         state.createThreadStatus.error =
-          action.payload?.message || action.error.message;
+          action.payload?.message || action.error?.message;
         state.createThreadStatus.success = false;
       })
       .addCase(getThreadById.pending, (state, action) => {
-        const isFromVotes = action.meta.arg.fromVotes;
+        const isFromVotes = action?.meta?.arg?.fromVotes;
         
         if (!isFromVotes) {
           state.threadDetailStatus.isLoading = true;
