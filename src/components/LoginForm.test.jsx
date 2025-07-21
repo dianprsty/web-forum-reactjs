@@ -92,7 +92,7 @@ describe("LoginForm", () => {
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByText("Password")).toBeInTheDocument();
 
-    const emailInput = screen.getByPlaceholderText("Username");
+    const emailInput = screen.getByPlaceholderText("Email");
     const passwordInput = screen.getByPlaceholderText("Password");
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
