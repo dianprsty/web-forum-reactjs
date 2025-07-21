@@ -16,6 +16,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: npm install and test
+        env:
+          VITE_API_BASE_URL: https://forum-api.dicoding.dev/v1
         run: |
           npm install
           npm run ci:test

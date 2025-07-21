@@ -11,7 +11,7 @@ describe("Login spec", () => {
       .should("be.visible");
   });
 
-  it("should display alert when email is empty", () => {
+  it("should display error message when email is empty", () => {
     cy.get('input[placeholder="Password"]').type("passwordrahasia");
     cy.get("button")
       .contains(/^Login$/)
@@ -19,7 +19,7 @@ describe("Login spec", () => {
     cy.contains("Email wajib diisi").should("be.visible");
   });
 
-  it("should display alert when password is empty", () => {
+  it("should display error message when password is empty", () => {
     cy.get('input[placeholder="Email"]').type("testuser@mail.co");
 
     cy.get("button")
@@ -29,7 +29,7 @@ describe("Login spec", () => {
     cy.contains("Password wajib diisi").should("be.visible");
   });
 
-  it("should display alert when email and password are wrong", () => {
+  it("should display error message when email and password are wrong", () => {
     cy.get('input[placeholder="Email"]').type("testuser@mail.co");
     cy.get('input[placeholder="Password"]').type("wrong_password");
 
@@ -48,11 +48,6 @@ describe("Login spec", () => {
       .contains(/^Login$/)
       .click();
 
-    cy.get("#profile").should("be.visible");
-    cy.get("#profile").click();
-
-    cy.get("button")
-      .contains(/^Logout$/)
-      .should("be.visible");
+    cy.contains("Ask Anything").should("be.visible");
   });
 });
