@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { clearError } from "@/redux/slice/auth";
 import InputWithLabel from "./InputWithLabel";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "./Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerAction } from "@/redux/actions/auth";
 import { Link } from "react-router-dom";
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
+  const { error, loading } = useSelector((state) => state.auth);
 
   const inputLogin = Yup.object().shape({
     name: Yup.string().required("Nama wajib diisi"),
@@ -21,12 +23,24 @@ export default function RegisterForm() {
 
   const {
     register,
-    formState: { errors, isLoading },
-
+    formState: { errors },
+    setError,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(inputLogin),
   });
+
+  useEffect(() => {
+    if (error) {
+      setError('apiError', { message: error });
+    }
+  }, [error, setError]);
+
+  const handleInputChange = () => {
+    if (error) {
+      dispatch(clearError());
+    }
+  };
 
   const onSubmit = (data) => {
     dispatch(registerAction(data));
@@ -37,6 +51,12 @@ export default function RegisterForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 p-8 w-10/12 max-w-sm rounded-lg"
     >
+      {errors.apiError && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-2">
+          <span className="block sm:inline">{errors.apiError.message}</span>
+        </div>
+      )}
+
       <h1 className="text-3xl mb-3 text-center font-bold text-white">
         Register
       </h1>
@@ -47,6 +67,7 @@ export default function RegisterForm() {
         placeholder="Name"
         errors={errors.name?.message}
         register={register}
+        onChange={handleInputChange}
       />
       <InputWithLabel
         name="email"
@@ -54,6 +75,7 @@ export default function RegisterForm() {
         placeholder="Email"
         errors={errors.email?.message}
         register={register}
+        onChange={handleInputChange}
       />
       <InputWithLabel
         name="password"
@@ -62,12 +84,13 @@ export default function RegisterForm() {
         errors={errors.password?.message}
         type="password"
         register={register}
+        onChange={handleInputChange}
       />
-      <Button type="submit" className="mt-4" disabled={isLoading}>
-        {isLoading ? "Loading..." : "Register"}
+      <Button type="submit" className="mt-4" disabled={loading}>
+        {loading ? "Loading..." : "Register"}
       </Button>
       <p className="text-white">
-        Don&lsquo;t have an account?
+        Already have an account?
         <Link to="/auth/login" className="font-semibold cursor-pointer">
           {" "}
           Login

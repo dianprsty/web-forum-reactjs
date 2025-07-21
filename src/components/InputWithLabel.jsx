@@ -10,6 +10,7 @@ export default function InputWithLabel({
   name,
   placeholder,
   id,
+  onChange,
   ...props
 }) {
   return (
@@ -26,6 +27,12 @@ export default function InputWithLabel({
         placeholder={placeholder}
         {...register(name)}
         {...props}
+        onChange={(e) => {
+          if (register(name).onChange) {
+            register(name).onChange(e);
+          }
+          if (onChange) onChange();
+        }}
       />
       {errors && <p className="text-red-600 text-sm">{errors}</p>}
     </div>
@@ -40,4 +47,5 @@ InputWithLabel.propTypes = {
   name: PropTypes.string,
   placeholder: PropTypes.string,
   id: PropTypes.string,
+  onChange: PropTypes.func,
 };
