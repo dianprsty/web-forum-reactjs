@@ -14,7 +14,11 @@ const initialState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearError(state) {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginAction.pending, (state) => {
       state.status = fetchStatus.pending;
@@ -31,7 +35,7 @@ export const authSlice = createSlice({
     builder.addCase(loginAction.rejected, (state, action) => {
       state.status = fetchStatus.error;
       state.loading = false;
-      state.error = action.error.message;
+      state.error = action.payload;
     });
     builder.addCase(registerAction.pending, (state) => {
       state.status = fetchStatus.pending;
@@ -46,7 +50,7 @@ export const authSlice = createSlice({
     builder.addCase(registerAction.rejected, (state, action) => {
       state.status = fetchStatus.error;
       state.loading = false;
-      state.error = action.error.message;
+      state.error = action.payload;
     });
     builder.addCase(logoutAction, (state) => {
       state.status = fetchStatus.idle;
@@ -57,5 +61,7 @@ export const authSlice = createSlice({
     });
   },
 });
+
+export const { clearError } = authSlice.actions;
 
 export default authSlice.reducer;

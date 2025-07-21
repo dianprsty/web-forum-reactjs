@@ -1,4 +1,3 @@
-const { UserIcon } = require("@heroicons/react/24/outline");
 
 describe("Login spec", () => {
   beforeEach(() => {
