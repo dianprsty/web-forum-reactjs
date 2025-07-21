@@ -2,11 +2,10 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi, beforeEach } from "vitest";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import LoginForm from "./LoginForm";
 import { loginAction } from "@/redux/actions/auth";
-import { useForm } from "react-hook-form";
 
 const mockDispatch = vi.fn();
 
@@ -77,18 +76,12 @@ describe("LoginForm", () => {
   });
 
 
-  const mockStore = {
-    getState: vi.fn(),
-    subscribe: vi.fn(),
-    dispatch: vi.fn()
-  };
-
   it("should render login form correctly", async () => {
 
     const user = userEvent.setup();
 
     mockDispatch.mockClear();
-    
+
     vi.mocked(useSelector).mockReturnValue({ error: null, loading: false });
 
     const { container } = render(<LoginForm />);
@@ -99,7 +92,7 @@ describe("LoginForm", () => {
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByText("Password")).toBeInTheDocument();
 
-    const emailInput = screen.getByPlaceholderText("Email");
+    const emailInput = screen.getByPlaceholderText("Username");
     const passwordInput = screen.getByPlaceholderText("Password");
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
@@ -130,25 +123,25 @@ describe("LoginForm", () => {
   it("should call loginAction when form is submitted", async () => {
     vi.resetAllMocks();
     mockDispatch.mockClear();
-    
-    loginAction.mockImplementation(() => {});
-    
+
+    loginAction.mockImplementation(() => { });
+
     vi.mocked(useSelector).mockReturnValue({ error: null, loading: false });
 
     mockFormState.errors = {};
 
     const { container } = render(<LoginForm />);
-    
+
     const form = container.querySelector('form');
     fireEvent.submit(form);
-    
+
     expect(mockDispatch).toHaveBeenCalled();
   });
 
   it("should show loading state when isLoading is true", async () => {
     vi.resetAllMocks();
     mockDispatch.mockClear();
-    
+
     vi.mocked(useSelector).mockReturnValue({ error: null, loading: true });
 
     vi.mock("react-hook-form", () => ({
@@ -180,13 +173,13 @@ describe("LoginForm", () => {
   it("should display API error message when API returns an error", async () => {
     vi.resetAllMocks();
     mockDispatch.mockClear();
-    
+
     vi.mocked(useSelector).mockReturnValue({ error: "Invalid credentials", loading: false });
-    
+
     mockFormState.errors = {};
-    
+
     const { container } = render(<LoginForm />);
-    
+
     const errorAlert = container.querySelector('.bg-red-100');
     expect(errorAlert).not.toBeNull();
     expect(errorAlert.textContent).toContain("Invalid credentials");

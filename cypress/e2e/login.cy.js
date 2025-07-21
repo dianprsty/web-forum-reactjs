@@ -48,11 +48,6 @@ describe("Login spec", () => {
       .contains(/^Login$/)
       .click();
 
-    cy.get("#profile").should("be.visible");
-    cy.get("#profile").click();
-
-    cy.get("button")
-      .contains(/^Logout$/)
-      .should("be.visible");
+    cy.contains("Ask Anything").should("be.visible");
   });
 });
